@@ -15,7 +15,7 @@ def predict():
     data=request.json([data])
     print(data)
     print(data[0])
-    normalize_data=scalar.transform(np.array(list(data)).reshape(-1,1))
+    normalize_data=scalar.transform(np.array(list(data.values()).reshape(-1,1))
     print(normalize_data)
     prediction=regressor.predict(normalize_data)
     print(prediction[0])
