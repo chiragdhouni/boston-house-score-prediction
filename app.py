@@ -7,19 +7,17 @@ regressor=pickle.load(open(filename, 'rb'))
 scalar=pickle.load(open("scalar.pkl", 'rb'))
 
 app=flask.Flask(__name__)
-@app.route('/')
-def home():
-    return render_template('index.html')
-@app.route('/predict',methods=['POST','GET'])
-def predict():
-    data=request.json([data])
-    print(data)
-    print(data[0])
-    normalize_data=scalar.transform(np.array(list(data.values()).reshape(-1,1))
-    print(normalize_data)
-    prediction=regressor.predict(normalize_data)
-    print(prediction[0])
-    return (jsonify(prediction))
+
+
+@app.route('/predict_1',methods=['POST'])
+def predict_1():
+    data=[float(x) for x in request.form.values()]
+    final_data=scalar.transform(np.array(data).reshape(-1,1))
+    output=regressor.predict(final_data)
+    print(output[0])
+    
+    return render_template('home.html',predicted_text="the output is {}".format(output))
+
 
 if(__name__=="__main__"):
     app.run(debug='True')
